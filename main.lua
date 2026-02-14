@@ -1,0 +1,21 @@
+--------------------------------------------------------------------------------
+--- 该文件故意留空。
+--- 本脚本作为 mpvacious 的自定义子脚本运行，不应直接作为 mpv 插件加载。
+---
+--- 功能简述：
+---   1. 自动分析并过滤非日语字幕行，并根据统计数据锁定日语位置。
+---   2. 提供沉浸式控制菜单，实时显示识别进度与统计得分。
+---   3. 自动识别 mpvacious 的语言配置，仅在匹配用户自定义的启用条件时激活逻辑。
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+--- This file is intentionally left blank.
+--- It operates as a custom sub-script for mpvacious and is not intended
+--- to be loaded as a standalone mpv plugin.
+---
+--- Features:
+---   1. Filters non-Japanese lines and locks Japanese position via scoring.
+---   2. Provides an interactive menu for real-time tracking of statistics.
+---   3. Automatically detects mpvacious profiles and activates only when 
+---      user-defined configuration strings are matched.
+--------------------------------------------------------------------------------
