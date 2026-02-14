@@ -1,0 +1,27 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Package files
+        run: |
+          git archive --format=zip HEAD -o mpvacious_custom_subtitle_filter.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: mpvacious_custom_subtitle_filter.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

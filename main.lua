@@ -1,0 +1,27 @@
+--------------------------------------------------------------------------------
+--- 该文件故意留空。
+--- 本脚本作为 mpvacious 的自定义子脚本运行，不应直接作为 mpv 插件加载。
+--- 核心逻辑接口位于：custom_subtitle_filter.lua
+---
+--- 功能简述：
+---   1. 智能过滤：自动从双语字幕中提取目标语言行。
+---   2. 多语支持：初始设计用于提取日语，现已实验性支持通过配置文件自定义提取其他语言。
+---   3. 自动锁定：根据统计得分自动识别并锁定目标语言所在的字幕层级。
+---   4. 交互菜单：提供沉浸式控制界面，实时反馈识别进度与统计数据。
+---   5. 动态激活：自动匹配 mpvacious 配置，仅在满足用户自定义条件时运行。
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--- This file is intentionally left blank.
+--- It operates as a custom sub-script for mpvacious and is not intended
+--- to be loaded as a standalone mpv plugin.
+--- Real interface module: custom_subtitle_filter.lua
+---
+--- Features:
+---   1. Smart Filtering: Extracts target language lines from dual-language subtitles.
+---   2. Multi-language: Originally for Japanese; now experimentally supports 
+---      other languages via configuration.
+---   3. Auto-Locking: Identifies and locks target language position via scoring.
+---   4. Interactive Menu: Real-time tracking of statistics and recognition status.
+---   5. Dynamic Activation: Activates only when user-defined mpvacious 
+---      profiles are matched.
+--------------------------------------------------------------------------------
