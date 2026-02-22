@@ -48,13 +48,13 @@ function menu:get_bindings()
     return {{
         key = "o",
         fn = function()
-            self.callbacks.toggle();
+            self.callbacks.toggle()
             self:update()
         end
     }, {
         key = "r",
         fn = function()
-            self.callbacks.reset();
+            self.callbacks.reset()
             self:update()
         end
     }, {
