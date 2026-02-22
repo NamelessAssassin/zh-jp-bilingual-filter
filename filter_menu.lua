@@ -58,6 +58,12 @@ function menu:get_bindings()
             self:update()
         end
     }, {
+        key = "R",
+        fn = function()
+            self.callbacks.reset_history()
+            self:update()
+        end
+    }, {
         key = "ESC",
         fn = function()
             self:close()
@@ -67,7 +73,7 @@ end
 
 -- 获取自动生成的按键 ID 格式
 function menu:get_binding_id(key)
-    return "custom_filter_menu_" .. key:lower()
+    return "custom_filter_menu_" .. key
 end
 
 function menu:setup(callbacks)
@@ -122,7 +128,7 @@ function menu:update()
     ass = ass .. "{\\fs12} \\N"
     ass = ass .. self.style.sep .. "------------------------------------------------------\\N"
     ass = ass .. "{\\fs10} \\N"
-    ass = ass .. self.style.hint .. "[o] 开启/关闭   [r] 重置模式   [esc/alt+m] 关闭"
+    ass = ass .. self.style.hint .. "[o] 开启/关闭   [r] 重置模式   [R] 重置历史   [esc/alt+m] 关闭"    
 
     self.overlay.data = ass
     self.overlay:update()

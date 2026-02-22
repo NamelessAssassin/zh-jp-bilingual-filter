@@ -138,7 +138,11 @@ M.init = function(config)
             state.enabled = not state.enabled
         end,
         reset = function()
-            state:reset_scores();
+            state:reset_scores()
+        end,
+        reset_history = function()
+            state:reset_scores()
+            reset_state_history()
         end
     })
 
