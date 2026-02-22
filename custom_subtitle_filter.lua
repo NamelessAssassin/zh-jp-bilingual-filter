@@ -13,10 +13,6 @@ local function update_scores(lines)
         return
     end
 
-    if not is_profile_active() then
-        return
-    end
-
     if not lines or #lines < 1 or #lines > 2 then
         return
     end
@@ -26,7 +22,8 @@ local function update_scores(lines)
     if #lines == 1 then
         key = "MONO"
     elseif #lines == 2 then
-        local h1, h2 = utils.contains_kana(lines[1]), utils.contains_kana(lines[2])
+        local h1 = utils.contains_kana(lines[1])
+        local h2 = utils.contains_kana(lines[2])
         if h1 and not h2 then
             key = "JP_TOP"
         elseif not h1 and h2 then
