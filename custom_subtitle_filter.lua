@@ -5,7 +5,7 @@ local menu = require('filter_menu')
 local M = {}
 
 local state_history = {}
-local last_subtitle = nil
+local last_subtitle_track = nil
 
 local is_profile_active = function()
     return nil
@@ -13,15 +13,15 @@ end
 
 -- 将当前状态存入历史记录
 local function save_current_state()
-    if last_subtitle then
-        state_history[last_subtitle] = state:get_current_data()
+    if last_subtitle_track then
+        state_history[last_subtitle_track] = state:get_current_data()
     end
 end
 
--- 根据新指纹加载状态
-local function load_subtitle_state(fingerprint)
-    if fingerprint and state_history[fingerprint] then
-        state:restore_data(state_history[fingerprint])
+-- 根据新的字幕指纹加载状态
+local function load_subtitle_state(subtitle_track)
+    if subtitle_track and state_history[subtitle_track] then
+        state:restore_data(state_history[subtitle_track])
     else
         state:reset_scores()
     end
@@ -139,10 +139,10 @@ M.init = function(config)
 
     -- 监听字幕轨道切换
     mp.observe_property("sid", "string", function(_, value)
-        local current_fp = utils.get_subtitle_fingerprint(value)
+        local current_subtitle_track = utils.get_subtitle_fingerprint(value)
 
         -- 如果指纹没变（可能是 mpv 内部属性震荡），不做任何操作
-        if current_fp == last_subtitle then
+        if current_subtitle_track == last_subtitle_track then
             return
         end
 
@@ -150,17 +150,17 @@ M.init = function(config)
         save_current_state()
 
         -- 加载或重置新字幕状态
-        load_subtitle_state(current_fp)
+        load_subtitle_state(current_subtitle_track)
 
-        -- 更新当前追踪的指纹
-        last_subtitle = current_fp
+        -- 更新当前追踪的字幕
+        last_subtitle_track = current_subtitle_track
     end)
 
     -- 监听视频加载
     mp.register_event("start-file", function()
         state:reset_scores()
         state_history = {}
-        last_subtitle = nil
+        last_subtitle_track = nil
     end)
 
     -- 快捷键绑定
