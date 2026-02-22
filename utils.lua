@@ -131,4 +131,34 @@ this.notify = function(msg)
     end
 end
 
+-------------------------------------------------------------------------------
+-- Others
+-------------------------------------------------------------------------------
+
+this.deep_copy = function(obj)
+    if type(obj) ~= 'table' then
+        return obj
+    end
+
+    local res = {}
+    for k, v in pairs(obj) do
+        res[k] = this.deep_copy(v)
+    end
+    return res
+end
+
+this.get_subtitle_fingerprint = function(sid)
+    if not sid or sid == "no" then
+        return nil
+    end
+
+    local tracks = mp.get_property_native("track-list")
+    for _, track in ipairs(tracks) do
+        if track.type == "sub" and tostring(track.id) == sid then
+            return (track.title or "no-title") .. "_" .. (track.lang or "und") .. "_" .. (track.id or "")
+        end
+    end
+    return nil
+end
+
 return this

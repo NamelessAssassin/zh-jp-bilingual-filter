@@ -1,3 +1,5 @@
+utils = require('utils')
+
 local state = {
     enabled = true,
     MODES = {
@@ -20,6 +22,18 @@ function state:reset_scores()
     self.scores.JP_TOP = 0
     self.scores.JP_BOTTOM = 0
     self.scores.MONO = 0
+end
+
+function state:get_current_data()
+    return {
+        current_mode = self.current_mode,
+        scores = utils.deep_copy(self.scores)
+    }
+end
+
+function state:restore_data(data)
+    self.current_mode = data.current_mode
+    self.scores = utils.deep_copy(data.scores)
 end
 
 return state

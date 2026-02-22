@@ -4,8 +4,29 @@ local menu = require('filter_menu')
 
 local M = {}
 
+local state_history = {}
+local last_subtitle = nil
+
 local is_profile_active = function()
     return nil
+end
+
+-- 将当前状态存入历史记录
+local function save_current_state()
+    if last_subtitle then
+        state_history[last_subtitle] = state:get_current_data()
+    end
+end
+
+-- 根据新指纹加载状态
+local function load_subtitle_state(fingerprint)
+    if fingerprint and state_history[fingerprint] then
+        state:restore_data(state_history[fingerprint])
+    else
+        state:reset_scores()
+    end
+    -- 无论读档还是重置，都更新菜单显示
+    menu:maybe_refresh()
 end
 
 local function update_scores(lines)
@@ -118,12 +139,28 @@ M.init = function(config)
 
     -- 监听字幕轨道切换
     mp.observe_property("sid", "string", function(_, value)
-        state:reset_scores()
+        local current_fp = utils.get_subtitle_fingerprint(value)
+
+        -- 如果指纹没变（可能是 mpv 内部属性震荡），不做任何操作
+        if current_fp == last_subtitle then
+            return
+        end
+
+        -- 1. 存档旧字幕状态
+        save_current_state()
+
+        -- 2. 加载或重置新字幕状态
+        load_subtitle_state(current_fp)
+
+        -- 3. 更新当前追踪的指纹
+        last_subtitle = current_fp
     end)
 
     -- 监听开始加载
     mp.register_event("start-file", function()
         state:reset_scores()
+        state_history = {}
+        last_subtitle = nil
     end)
 
     -- 快捷键绑定
