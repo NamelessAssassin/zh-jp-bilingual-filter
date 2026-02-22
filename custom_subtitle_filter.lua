@@ -146,17 +146,17 @@ M.init = function(config)
             return
         end
 
-        -- 1. 存档旧字幕状态
+        -- 存档旧字幕状态
         save_current_state()
 
-        -- 2. 加载或重置新字幕状态
+        -- 加载或重置新字幕状态
         load_subtitle_state(current_fp)
 
-        -- 3. 更新当前追踪的指纹
+        -- 更新当前追踪的指纹
         last_subtitle = current_fp
     end)
 
-    -- 监听开始加载
+    -- 监听视频加载
     mp.register_event("start-file", function()
         state:reset_scores()
         state_history = {}
