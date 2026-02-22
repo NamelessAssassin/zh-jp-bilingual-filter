@@ -29,6 +29,11 @@ local function load_subtitle_state(subtitle_track)
     menu:maybe_refresh()
 end
 
+local function reset_state_history()
+    state_history = {}
+    last_subtitle_track = nil
+end
+
 local function update_scores(lines)
     if not state.enabled or state.current_mode ~= "AUTO" then
         return
@@ -159,8 +164,7 @@ M.init = function(config)
     -- 监听视频加载
     mp.register_event("start-file", function()
         state:reset_scores()
-        state_history = {}
-        last_subtitle_track = nil
+        reset_state_history()
     end)
 
     -- 快捷键绑定
