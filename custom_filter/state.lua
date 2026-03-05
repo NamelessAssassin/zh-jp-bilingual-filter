@@ -41,13 +41,19 @@ end
 function state:get_current_data()
     return {
         current_mode = self.current_mode,
-        scores = utils.deep_copy(self.scores)
+        scores = {
+            TARGET_TOP = self.scores.TARGET_TOP,
+            TARGET_BOTTOM = self.scores.TARGET_BOTTOM,
+            MONO = self.scores.MONO
+        }
     }
 end
 
 function state:restore_data(data)
     self.current_mode = data.current_mode
-    self.scores = utils.deep_copy(data.scores)
+    self.scores.TARGET_TOP = data.scores.TARGET_TOP
+    self.scores.TARGET_BOTTOM = data.scores.TARGET_BOTTOM
+    self.scores.MONO = data.scores.MONO
 end
 
 function state:save_history()

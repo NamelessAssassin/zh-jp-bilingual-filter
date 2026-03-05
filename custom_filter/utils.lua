@@ -237,18 +237,6 @@ this.join_lines = function(lines)
     return table.concat(lines, "\n")
 end
 
-this.deep_copy = function(obj)
-    if type(obj) ~= 'table' then
-        return obj
-    end
-
-    local res = {}
-    for k, v in pairs(obj) do
-        res[k] = this.deep_copy(v)
-    end
-    return res
-end
-
 this.get_subtitle_fingerprint = function(sid)
     if not sid or sid == "no" then
         return nil
